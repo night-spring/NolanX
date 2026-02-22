@@ -1,12 +1,17 @@
 import pickle
+import requests
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import os
+import json
 
 class MovieRecommender:
     def __init__(self):
         try:
-            self.movies = pickle.load(open('./jupyter/movies.pkl', 'rb'))
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            movies_path = os.path.join(script_dir, 'movies.pkl')
+            self.movies = pickle.load(open(movies_path, 'rb'))
             self.movies = pd.DataFrame(self.movies)
             self.tfidf = TfidfVectorizer(
                 max_features=10000,
@@ -26,3 +31,8 @@ class MovieRecommender:
         return [self.movies.iloc[i[0]].original_title for i in top]
 
 
+    def top_50_movies(self):
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        movie_details_path = os.path.join(script_dir, 'movie_details.json')
+        with open(movie_details_path, 'r') as f:
+            return json.load(f)
