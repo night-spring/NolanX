@@ -1,14 +1,17 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import LoadingPage from './components/LoadingPage';
 import ErrorPage from './components/ErrorPage';
 import MovieGrid from './components/MovieGrid';
+import Pagination from './components/Pagination';
 
 function App() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 50; // Show 50 movies per page
 
   const fetchMovies = () => {
     setLoading(true);
@@ -38,6 +41,18 @@ function App() {
     fetchMovies();
   }, []);
 
+  const totalPages = Math.ceil(movies.length / itemsPerPage);
+  const paginatedMovies = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return movies.slice(startIndex, endIndex);
+  }, [movies, currentPage, itemsPerPage]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="App min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
       {/* Simplified background pattern */}
@@ -54,7 +69,7 @@ function App() {
             Discover Your Next Favorite Film
           </h2>
           <p className="text-amber-200/80 text-sm">
-            Explore our curated collection of cinematic masterpieces
+            Explore our curated collection of {movies.length} cinematic masterpieces
           </p>
         </div>
 
@@ -62,7 +77,16 @@ function App() {
 
         {error && <ErrorPage error={error} onRetry={fetchMovies} />}
 
-        {!loading && !error && <MovieGrid movies={movies} />}
+        {!loading && !error && (
+          <>
+            <MovieGrid movies={paginatedMovies} />
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </>
+        )}
       </main>
     </div>
   );

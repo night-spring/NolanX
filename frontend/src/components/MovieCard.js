@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MovieCard = ({ movie }) => {
+const MovieCard = React.memo(({ movie }) => {
   // Debug: log movie object to see what's available
   React.useEffect(() => {
     if (movie) {
@@ -20,6 +20,7 @@ const MovieCard = ({ movie }) => {
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
               alt={movie.original_title}
+              loading="lazy"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
             {/* Gradient overlay */}
@@ -110,6 +111,6 @@ const MovieCard = ({ movie }) => {
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-400/10 via-transparent to-purple-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
     </div>
   );
-};
+});
 
 export default MovieCard;
