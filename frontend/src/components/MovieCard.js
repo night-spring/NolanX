@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MovieCard = React.memo(({ movie }) => {
+const MovieCard = React.memo(({ movie, onClick }) => {
   // Debug: log movie object to see what's available
   React.useEffect(() => {
     if (movie) {
@@ -12,7 +12,7 @@ const MovieCard = React.memo(({ movie }) => {
   const starCount = Math.round(rating / 2);
 
   return (
-    <div className="group relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] border border-slate-700/50 hover:border-amber-400/60 hover:shadow-amber-400/20">
+    <div className="group relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] border border-slate-700/50 hover:border-amber-400/60 hover:shadow-amber-400/20 cursor-pointer" onClick={() => onClick(movie)}>
       {/* Movie poster with standard 2:3 aspect ratio */}
       <div className="relative w-full aspect-[2/3] bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 flex items-center justify-center overflow-hidden">
         {movie.poster ? (
