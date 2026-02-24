@@ -1,13 +1,6 @@
 import React from 'react';
 
 const MovieCard = React.memo(({ movie, onClick }) => {
-  // Debug: log movie object to see what's available
-  React.useEffect(() => {
-    if (movie) {
-      console.log('Movie data:', movie);
-    }
-  }, [movie]);
-
   const rating = movie.vote_averageFloat || (movie.vote_average ? parseFloat(movie.vote_average) : 0);
   const starCount = Math.round(rating / 2);
 
@@ -69,25 +62,25 @@ const MovieCard = React.memo(({ movie, onClick }) => {
       </div>
 
       {/* Movie info section */}
-      <div className="p-5 bg-gradient-to-b from-slate-800/50 to-slate-900/80">
-        <div className="space-y-3">
+      <div className="p-3 md:p-5 bg-gradient-to-b from-slate-800/50 to-slate-900/80">
+        <div className="space-y-2">
           {/* Title */}
-          <h3 className="text-base font-bold text-white leading-tight line-clamp-2 group-hover:text-amber-300 transition-colors duration-300">
+          <h3 className="text-xs md:text-base font-bold text-white leading-tight line-clamp-2 group-hover:text-amber-300 transition-colors duration-300">
             {movie.original_title}
           </h3>
 
-          {/* Year and Genre */}
+          {/* Year and stars */}
           <div className="flex items-center justify-between text-xs">
             {movie.release_year && movie.release_year !== 'N/A' && (
-              <span className="text-slate-300 font-medium bg-slate-700/50 px-2 py-1 rounded-full">
+              <span className="text-slate-300 font-medium bg-slate-700/50 px-1.5 py-0.5 rounded-full text-[10px] md:text-xs">
                 {movie.release_year}
               </span>
             )}
-            <div className="flex space-x-1">
+            <div className="flex space-x-0.5">
               {[...Array(5)].map((_, i) => (
                 <svg
                   key={i}
-                  className={`w-3 h-3 ${i < starCount ? 'text-amber-400' : 'text-slate-600'}`}
+                  className={`w-2.5 h-2.5 md:w-3 md:h-3 ${i < starCount ? 'text-amber-400' : 'text-slate-600'}`}
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
@@ -95,14 +88,6 @@ const MovieCard = React.memo(({ movie, onClick }) => {
                 </svg>
               ))}
             </div>
-          </div>
-
-          {/* IMDb ID */}
-          <div className="flex items-center space-x-2 pt-2 border-t border-slate-700/50">
-            <span className="text-xs text-slate-400">IMDb:</span>
-            <span className="text-xs text-amber-400 font-mono bg-slate-800/50 px-2 py-1 rounded">
-              {movie.imdb_id}
-            </span>
           </div>
         </div>
       </div>

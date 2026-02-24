@@ -27,7 +27,7 @@ class MovieRecommender:
     def recommend(self, imdb_id: str):
         idx = self.movies[self.movies['imdb_id'] == imdb_id].index[0]
         sim = cosine_similarity(self.vectors[idx].reshape(1, -1), self.vectors)
-        top = sorted(list(enumerate(sim[0])), key=lambda x: x[1], reverse=True)[1:11]
+        top = sorted(list(enumerate(sim[0])), key=lambda x: x[1], reverse=True)[1:21]
         top_movies = []
         for i in top:
             m = self.movies.iloc[i[0]]
@@ -36,4 +36,7 @@ class MovieRecommender:
 
 
     def get_all_movies(self):
-        return self.movies.to_dict(orient='records')
+        import random
+        records = self.movies.to_dict(orient='records')
+        random.shuffle(records)
+        return records
