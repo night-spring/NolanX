@@ -8,17 +8,17 @@ const MovieCard = ({ movie }) => {
     }
   }, [movie]);
 
-  const rating = movie.imdbRatingFloat || (movie.imdbRating ? parseFloat(movie.imdbRating) : 0);
+  const rating = movie.vote_averageFloat || (movie.vote_average ? parseFloat(movie.vote_average) : 0);
   const starCount = Math.round(rating / 2);
 
   return (
     <div className="group relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-md rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 hover:scale-[1.02] border border-slate-700/50 hover:border-amber-400/60 hover:shadow-amber-400/20">
       {/* Movie poster with standard 2:3 aspect ratio */}
       <div className="relative w-full aspect-[2/3] bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 flex items-center justify-center overflow-hidden">
-        {movie.poster_path ? (
+        {movie.poster ? (
           <>
             <img
-              src={movie.poster_path}
+              src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
               alt={movie.original_title}
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
@@ -30,7 +30,7 @@ const MovieCard = ({ movie }) => {
                 <svg className="w-3 h-3 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
-                <span className="text-xs font-bold text-white">{movie.imdbRating}</span>
+                <span className="text-xs font-bold text-white">{movie.vote_average}</span>
               </div>
             )}
           </>
@@ -77,9 +77,9 @@ const MovieCard = ({ movie }) => {
 
           {/* Year and Genre */}
           <div className="flex items-center justify-between text-xs">
-            {movie.year && movie.year !== 'N/A' && (
+            {movie.release_year && movie.release_year !== 'N/A' && (
               <span className="text-slate-300 font-medium bg-slate-700/50 px-2 py-1 rounded-full">
-                {movie.year}
+                {movie.release_year}
               </span>
             )}
             <div className="flex space-x-1">

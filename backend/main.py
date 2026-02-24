@@ -24,35 +24,15 @@ async def read_root():
 
 @app.get("/movies/")
 async def get_all_movies():
-    movie_details = movie_recommender.top_50_movies()
-    formatted_movies = []
-    for imdb_id, details in movie_details.items():
-        # Extract IMDb rating and convert to numeric value
-        imdb_rating = details.get("imdbRating", "N/A")
-        try:
-            rating_float = float(imdb_rating)
-        except:
-            rating_float = 0
-        
-        formatted_movies.append({
-            "imdb_id": imdb_id,
-            "original_title": details.get("Title", "Unknown"),
-            "poster_path": details.get("Poster", ""),
-            "imdbRating": imdb_rating,
-            "imdbRatingFloat": rating_float,
-            "year": details.get("Year", "N/A"),
-            "plot": details.get("Plot", "No plot available"),
-            "ratings": details.get("Ratings", [])
-        })
-    return {"movies": formatted_movies}
+    movies_list = movie_recommender.get_all_movies()
+    return {"movies": movies_list}
 
 @app.get("/movies/{imdb_id}")
 async def get_movies(imdb_id: str):
-    movie = movies[movies['imdb_id'] == imdb_id].iloc[0]
-    return {"movie_title": movie.original_title}
+    movie = movies[movies['imdb_id'] == imdb_id].to_dict(orient='records')[0]
+    return movie
 
 @app.get("/recommend/{imdb_id}")
 async def recommend_movies(imdb_id: str):
-    movie_title = movies[movies['imdb_id'] == imdb_id].iloc[0]['original_title']
-    top_movies = recommend(movie_title)
+    top_movies = recommend(imdb_id)
     return {"recommended_movies": top_movies}

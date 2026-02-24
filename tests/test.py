@@ -7,8 +7,15 @@ from backend.movies import MovieRecommender
 
 def test_load_movies():
     movies_recommender = MovieRecommender()
-    movies = movies_recommender.top_50_movies()
+    movies = movies_recommender.get_all_movies()
     print(movies)  
 
+def test_recommend_movies():
+    movies_recommender = MovieRecommender()
+    movies = movies_recommender.get_all_movies()
+    imdb_id = movies[0]['imdb_id']
+    recommendations = movies_recommender.recommend(imdb_id)
+    print(recommendations)
+
 if __name__ == "__main__":
-    test_load_movies()
+    test_recommend_movies()

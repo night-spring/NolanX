@@ -24,15 +24,16 @@ class MovieRecommender:
             self.movies = pd.DataFrame()
             self.vectors = None
 
-    def recommend(self, movie_title: str):
-        idx = self.movies[self.movies['original_title'] == movie_title].index[0]
+    def recommend(self, imdb_id: str):
+        idx = self.movies[self.movies['imdb_id'] == imdb_id].index[0]
         sim = cosine_similarity(self.vectors[idx].reshape(1, -1), self.vectors)
         top = sorted(list(enumerate(sim[0])), key=lambda x: x[1], reverse=True)[1:11]
-        return [self.movies.iloc[i[0]].original_title for i in top]
+        top_movies = []
+        for i in top:
+            m = self.movies.iloc[i[0]]
+            top_movies.append(m.to_dict())
+        return top_movies
 
 
-    def top_50_movies(self):
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        movie_details_path = os.path.join(script_dir, 'movie_details.json')
-        with open(movie_details_path, 'r') as f:
-            return json.load(f)
+    def get_all_movies(self):
+        return self.movies.to_dict(orient='records')
