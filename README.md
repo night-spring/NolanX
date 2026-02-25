@@ -1,4 +1,5 @@
 # ◆ NolanX
+<img width="1919" height="1089" alt="image" src="NolanX.png"/>
 
 > **AI-powered movie discovery.** Browse thousands of films, click one, and get instant content-based recommendations — no accounts, no ratings, no noise.
 
@@ -8,8 +9,6 @@ NolanX is a full-stack movie recommendation app built with React and FastAPI. It
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.129-009688?style=flat-square&logo=fastapi)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.8-f7931e?style=flat-square&logo=scikitlearn)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-3-38bdf8?style=flat-square&logo=tailwindcss)
-
-<img width="1919" height="1089" alt="image" src="NolanX.png"/>
 
 ---
 
