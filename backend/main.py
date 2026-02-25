@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from movies import MovieRecommender
 
-app = FastAPI()
+app = FastAPI(title="NolanX API")
 
 # Enable CORS
 app.add_middleware(
